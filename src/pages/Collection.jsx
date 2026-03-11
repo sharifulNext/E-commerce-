@@ -27,59 +27,65 @@ const Collection = () => {
     );
   };
 
-  useEffect(() => {
-    let productsCopy = [...products];
+  // Filter and Search Logic
+  const applyFilters = () => {
+    let productsCopy = products.slice();
 
-    // 🔍 Search filter
-    if (showSearch && search.trim() !== '') {
+    // SearchBar filter
+    if (showSearch && search) {
       productsCopy = productsCopy.filter((item) =>
         item.name.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    // Category filter
+    // Category
     if (category.length > 0) {
-      productsCopy = productsCopy.filter((item) =>
-        category.includes(item.category)
-      );
+      productsCopy = productsCopy.filter((item) => category.includes(item.category));
     }
 
-    // SubCategory filter
+    // SubCategory
     if (subCategory.length > 0) {
-      productsCopy = productsCopy.filter((item) =>
-        subCategory.includes(item.subCategory)
-      );
-    }
-
-    // Sorting
-    switch (sortType) {
-      case 'lowToHigh':
-        productsCopy.sort((a, b) => a.price - b.price);
-        break;
-      case 'highToLow':
-        productsCopy.sort((a, b) => b.price - a.price);
-        break;
-      default:
-        break;
+      productsCopy = productsCopy.filter((item) => subCategory.includes(item.subCategory));
     }
 
     setFilterProducts(productsCopy);
-  }, [products, category, subCategory, sortType, search, showSearch]);
+  };
+
+// sorting
+  const sortProducts = () => {
+    let fpCopy = [...filterProducts];
+
+    switch (sortType) {
+      case 'lowToHigh':
+        setFilterProducts(fpCopy.sort((a, b) => a.price - b.price));
+        break;
+      case 'highToLow':
+        setFilterProducts(fpCopy.sort((a, b) => b.price - a.price));
+        break;
+      default:
+        applyFilters(); 
+        break;
+    }
+  };
+
+  // when category, subCategory, search, showSearch, or products change, apply filters
+  useEffect(() => {
+    applyFilters();
+  }, [category, subCategory, search, showSearch, products]);
+
+  // when sortType changes, sort products
+  useEffect(() => {
+    sortProducts();
+  }, [sortType]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t border-gray-200">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
+      
       {/* Filter Sidebar */}
       <div className="min-w-60">
-        <p
-          onClick={() => setShowFilter(!showFilter)}
-          className="my-2 text-xl flex items-center cursor-pointer gap-2"
-        >
+        <p onClick={() => setShowFilter(!showFilter)} className="my-2 text-xl flex items-center cursor-pointer gap-2">
           FILTERS
-          <img
-            className={`h-3 sm:hidden ${showFilter ? 'rotate-90' : ''}`}
-            src={assets.dropdown_icon}
-            alt=""
-          />
+          <img className={`h-3 sm:hidden ${showFilter ? 'rotate-90' : ''}`} src={assets.dropdown_icon} alt="" />
         </p>
 
         {/* Category Filter */}
@@ -87,10 +93,9 @@ const Collection = () => {
           <p className="mb-3 text-sm font-medium">CATEGORIES</p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             {['Men', 'Women', 'Kids'].map((cat) => (
-              <label key={cat} className="flex gap-2">
-                <input className="w-3" type="checkbox" value={cat} onChange={toggleCategory} />
-                {cat}
-              </label>
+              <p key={cat} className="flex gap-2">
+                <input className="w-3" type="checkbox" value={cat} onChange={toggleCategory} /> {cat}
+              </p>
             ))}
           </div>
         </div>
@@ -100,47 +105,32 @@ const Collection = () => {
           <p className="mb-3 text-sm font-medium">TYPE</p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             {['Topwear', 'Bottomwear', 'Winterwear'].map((type) => (
-              <label key={type} className="flex gap-2">
-                <input className="w-3" type="checkbox" value={type} onChange={toggleSubCategory} />
-                {type}
-              </label>
+              <p key={type} className="flex gap-2">
+                <input className="w-3" type="checkbox" value={type} onChange={toggleSubCategory} /> {type}
+              </p>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Product List */}
+      {/* Right Side - Product List */}
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
-          <Title text1={'ALL'} text2={'COLLECTION'} />
-          {/* Sort Dropdown */}
-          <select
-            onChange={(e) => setSortType(e.target.value)}
-            className="border-2 border-gray-300 text-sm px-2"
-          >
-            <option value="default">Default</option>
-            <option value="lowToHigh">Price: Low to High</option>
-            <option value="highToLow">Price: High to Low</option>
+          <Title text1={'ALL'} text2={'COLLECTIONS'} />
+          
+          {/* Product Sort */}
+          <select onChange={(e) => setSortType(e.target.value)} className="border-2 border-gray-300 text-sm px-2">
+            <option value="default">Sort by: Relevant</option>
+            <option value="lowToHigh">Sort by: Low to High</option>
+            <option value="highToLow">Sort by: High to Low</option>
           </select>
         </div>
 
-        {/* Product Items */}
+        {/* Map Products */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {filterProducts.length > 0 ? (
-            filterProducts.map((item, index) => (
-              <ProductItem
-                key={index}
-                name={item.name}
-                id={item._id}
-                price={item.price}
-                image={item.image}
-              />
-            ))
-          ) : (
-            <p className="text-gray-500 col-span-full text-center">
-              No products found.
-            </p>
-          )}
+          {filterProducts.map((item, index) => (
+            <ProductItem key={index} name={item.name} id={item._id} price={item.price} image={item.image} />
+          ))}
         </div>
       </div>
     </div>

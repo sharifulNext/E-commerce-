@@ -1,11 +1,12 @@
 import { assets } from '../assets/assets';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 
 const Navber = () => {
   const [visible, setVisible] = useState(false);
   const { setShowSearch, getCartCount } = useContext(ShopContext);
+  const navigate = useNavigate();
 
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
@@ -34,7 +35,7 @@ const Navber = () => {
       </ul>
 
       <div className='flex items-center gap-6'>
-        <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="Search" />
+        <img onClick={() => { setShowSearch(true); navigate('/collection'); }} src={assets.search_icon} className='w-5 cursor-pointer' alt="Search" />
 
         <div className='group relative'>
           <img className='w-5 cursor-pointer' src={assets.profile_icon} alt="Profile" />
