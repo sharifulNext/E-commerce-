@@ -1,65 +1,105 @@
-import React from 'react';
-import Title from '../components/Title';
-import { assets } from '../assets/assets';
-import NewsletterBox from '../components/NewsletterBox';
+import React from "react";
+import Title from "../components/Title";
+import { assets } from "../assets/assets";
+import NewsletterBox from "../components/NewsletterBox";
 
 const About = () => {
   return (
-    <div className="px-4">
-      <div className="text-2xl text-center pt-8 border-t">
-        <Title text1={'ABOUT'} text2={'US'} />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {/* Title */}
+      <div className="text-center pt-10 border-t">
+        <Title text1={"ABOUT"} text2={"US"} />
       </div>
 
-      <div className="my-10 flex flex-col md:flex-row gap-16 items-center">
-        <img
-          className="w-full md:max-w-[450px] rounded shadow-md"
-          src={assets.about_img}
-          alt="About Cloth Store"
-        />
+      {/* About Section */}
+      <div className="my-12 grid md:grid-cols-2 gap-10 items-center">
 
-        <div className="flex flex-col justify-center gap-6 md:w-2/3 text-gray-600 text-[17px] leading-7">
+        {/* Image */}
+        <div className="w-full">
+          <img
+            className="w-full rounded-xl shadow-lg object-cover"
+            src={assets.about_img}
+            alt="About Cloth Store"
+          />
+        </div>
+
+        {/* Text */}
+        <div className="flex flex-col gap-6 text-gray-600 text-[16px] md:text-[17px] leading-relaxed">
           <p>
-            Cloth Store was born out of a passion for innovation and a desire to redefine the online shopping experience. We believe that fashion should be accessible, stylish, and convenient. From everyday essentials to standout pieces, our mission is to bring you quality clothing that fits your lifestyle.
+            Cloth Store was born out of a passion for innovation and a desire to
+            redefine the online shopping experience. We believe that fashion
+            should be accessible, stylish, and convenient. From everyday
+            essentials to standout pieces, our mission is to bring you quality
+            clothing that fits your lifestyle.
           </p>
+
           <p>
-            Our dedicated team carefully curates each collection to reflect the latest trends while maintaining comfort and affordability. Whether you’re dressing for a casual outing, a workday, or a special event, Cloth Store is here to make sure you always look and feel your best.
+            Our dedicated team carefully curates each collection to reflect the
+            latest trends while maintaining comfort and affordability. Whether
+            you’re dressing for a casual outing, a workday, or a special event,
+            Cloth Store ensures you always look and feel your best.
           </p>
-          <b className='text-gray-800'>Our Mission</b>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Our Mission
+            </h3>
             <p>
-               Our mission is to provide high-quality, affordable clothing that empowers individuals to express their unique style confidently. We strive to create a seamless shopping experience by combining innovation, customer service, and sustainable practices to make fashion accessible to everyone.
+              Our mission is to provide high-quality, affordable clothing that
+              empowers individuals to express their unique style confidently. We
+              strive to create a seamless shopping experience by combining
+              innovation, customer service, and sustainable practices.
             </p>
-
+          </div>
         </div>
       </div>
-      <div className='text-xl py-4'>
-        <Title text1={'WHY'} text2={'CHOOSE US'} />
-        
+
+      {/* Why Choose Us */}
+      <div className="text-center mb-8">
+        <Title text1={"WHY"} text2={"CHOOSE US"} />
       </div>
-      <div className='flex flex-col md:flex-row text-sm mb-20'>
-        <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5'>
-          <b>Quality Assurance:</b>
-           <p className='text-gray-600'>
-               We are committed to maintaining the highest standards of quality in every product we offer. From sourcing premium materials to rigorous quality checks, our team ensures that each item meets our excellence criteria before it reaches you.
+
+      <div className="grid md:grid-cols-3 gap-6 mb-20">
+
+        {/* Card 1 */}
+        <div className="border rounded-xl p-8 hover:shadow-lg transition">
+          <h3 className="font-semibold text-lg mb-3">Quality Assurance</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            We are committed to maintaining the highest standards of quality in
+            every product we offer. From sourcing premium materials to rigorous
+            quality checks, each item meets our excellence criteria before it
+            reaches you.
           </p>
         </div>
-        <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5'>
-          <b>Convenience:</b>
-           <p className='text-gray-600'>
-             Shopping with us is designed to be easy and hassle-free. With a user-friendly interface, fast delivery, and secure payment options, we aim to make your experience as smooth and enjoyable as possible from browsing to checkout.
+
+        {/* Card 2 */}
+        <div className="border rounded-xl p-8 hover:shadow-lg transition">
+          <h3 className="font-semibold text-lg mb-3">Convenience</h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Shopping with us is designed to be easy and hassle-free. With a
+            user-friendly interface, fast delivery, and secure payment options,
+            we aim to make your experience smooth and enjoyable.
           </p>
-
         </div>
-         <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5'>
-          <b>Exceptional Customer Service:</b>
-          <p className='text-gray-600'>
-          Our dedicated support team is always here to assist you. Whether you have a question, need help with your order, or simply want style advice, we are committed to providing friendly, fast, and reliable service every step of the way.
-         </p>   
 
+        {/* Card 3 */}
+        <div className="border rounded-xl p-8 hover:shadow-lg transition">
+          <h3 className="font-semibold text-lg mb-3">
+            Exceptional Customer Service
+          </h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Our dedicated support team is always here to assist you. Whether you
+            have a question or need help with your order, we provide friendly,
+            fast, and reliable service every step of the way.
+          </p>
         </div>
-  
+
       </div>
 
+      {/* Newsletter */}
       <NewsletterBox />
+
     </div>
   );
 };

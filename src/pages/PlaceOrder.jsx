@@ -5,144 +5,94 @@ import CartTotal from '../components/CartTotal';
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
-
+  
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    street: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    country: '',
-    phone: '',
+    firstName: '', lastName: '', email: '', street: '', 
+    city: '', state: '', zipcode: '', country: '', phone: ''
   });
-
-  const [paymentMethod, setPaymentMethod] = useState('cod'); // default: cash on delivery
+  
+  const [paymentMethod, setPaymentMethod] = useState('cod'); 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleOrderSubmit = () => {
-    const allFilled = Object.values(form).every((value) => value.trim() !== '');
-    if (!allFilled) {
+  const handleOrderSubmit = async () => {
+    // ফরম ভ্যালিডেশন
+    if (Object.values(form).some((v) => v.trim() === '')) {
       alert('Please fill out all the fields!');
       return;
     }
 
-    const orderData = { ...form, paymentMethod };
-    const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
-    const newOrders = [...existingOrders, orderData];
-    localStorage.setItem('orders', JSON.stringify(newOrders));
-
-    if (paymentMethod === 'sslcommerz') {
-      alert('Redirecting to SSLCOMMERZ...');
-      // Replace with your actual SSLCOMMERZ redirect logic or API call
-      window.location.href = 'https://sandbox.sslcommerz.com/gwprocess/v4/gw.php';
-    } else {
-      alert('Order placed successfully with Cash on Delivery!');
-      navigate('/orders');
+    // পেমেন্ট গেটওয়ে লজিক
+    switch (paymentMethod) {
+      case 'stripe':
+        alert('Redirecting to Stripe Secure Checkout...');
+        // এখানে Stripe Integration কোড বসবে
+        break;
+      case 'sslcommerz':
+        alert('Redirecting to SSLCOMMERZ gateway...');
+        window.location.href = 'https://sandbox.sslcommerz.com/gwprocess/v4/gw.php';
+        break;
+      case 'cod':
+      default:
+        alert('Order placed successfully via Cash on Delivery!');
+        navigate('/orders');
+        break;
     }
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
+    <div className="flex flex-col sm:flex-row justify-between gap-12 pt-10 border-t min-h-[80vh] px-4 sm:px-[9vw]">
       
       {/* Left Side - Delivery Info */}
-      <div className="flex flex-col gap-4 w-full sm:w-[480px]">
-        <div className="text-xl sm:text-2xl my-3">
-          <Title text1={'DELIVERY'} text2={'INFORMATION'} />
+      <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
+        <Title text1={'DELIVERY'} text2={'INFORMATION'} />
+        <div className="flex gap-3">
+          <input name="firstName" value={form.firstName} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="text" placeholder="First name" required />
+          <input name="lastName" value={form.lastName} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="text" placeholder="Last name" required />
+        </div>
+        <input name="email" value={form.email} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="email" placeholder="Email address" required />
+        <input name="street" value={form.street} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="text" placeholder="Street" required />
+        <div className="flex gap-3">
+          <input name="city" value={form.city} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="text" placeholder="City" required />
+          <input name="state" value={form.state} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="text" placeholder="State" required />
         </div>
         <div className="flex gap-3">
-          <input name="firstName" value={form.firstName} onChange={handleChange}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            type="text" placeholder="First name" />
-          <input name="lastName" value={form.lastName} onChange={handleChange}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            type="text" placeholder="Last name" />
+          <input name="zipcode" value={form.zipcode} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="number" placeholder="Zipcode" required />
+          <input name="country" value={form.country} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="text" placeholder="Country" required />
         </div>
-        <input name="email" value={form.email} onChange={handleChange}
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          type="email" placeholder="Email address" />
-        <input name="street" value={form.street} onChange={handleChange}
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          type="text" placeholder="Street" />
-        <div className="flex gap-3">
-          <input name="city" value={form.city} onChange={handleChange}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            type="text" placeholder="City" />
-          <input name="state" value={form.state} onChange={handleChange}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            type="text" placeholder="State" />
-        </div>
-        <div className="flex gap-3">
-          <input name="zipcode" value={form.zipcode} onChange={handleChange}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            type="number" placeholder="Zipcode" />
-          <input name="country" value={form.country} onChange={handleChange}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            type="text" placeholder="Country" />
-        </div>
-        <input name="phone" value={form.phone} onChange={handleChange}
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          type="number" placeholder="Phone" />
+        <input name="phone" value={form.phone} onChange={handleChange} className="border border-gray-300 rounded p-2 w-full" type="number" placeholder="Phone" required />
       </div>
 
-      {/* Right Side - Cart Total & Payment */}
-      <div className="mt-8">
-        <div className="mt-8 min-w-80">
-          <CartTotal />
-        </div>
-
-        <div className="mt-12">
+      {/* Right Side - Payment & Cart */}
+      <div className="w-full sm:max-w-[400px]">
+        <CartTotal />
+        <div className="mt-10">
           <Title text1={'PAYMENT'} text2={'METHOD'} />
-
-          {/* Payment Options */}
-          <div className="flex gap-3 flex-col lg:flex-row mt-4">
-            {/* Cash On Delivery */}
-            <div
-              onClick={() => setPaymentMethod('cod')}
-              className={`flex items-center gap-3 border p-2 px-3 rounded cursor-pointer ${
-                paymentMethod === 'cod' ? 'border-black' : 'border-gray-300'
-              }`}
-            >
-              <div className={`min-w-3.5 h-3.5 border rounded-full ${
-                paymentMethod === 'cod' ? 'bg-black' : 'bg-white'
-              }`}></div>
-              <p className="text-gray-500 text-sm font-medium mx-4">Cash On Delivery</p>
-            </div>
-
-            {/* SSLCOMMERZ */}
-            <div
-              onClick={() => setPaymentMethod('sslcommerz')}
-              className={`flex items-center gap-3 border p-2 px-3 rounded cursor-pointer ${
-                paymentMethod === 'sslcommerz' ? 'border-black' : 'border-gray-300'
-              }`}
-            >
-              <div className={`min-w-3.5 h-3.5 border rounded-full ${
-                paymentMethod === 'sslcommerz' ? 'bg-black' : 'bg-white'
-              }`}></div>
-              <p className="text-gray-500 text-sm font-medium mx-4">Pay with SSLCOMMERZ</p>
-              <img
-                src="https://www.sslcommerz.com/wp-content/uploads/2022/02/SSLCOMMERZ-Logo.png"
-                alt="SSLCOMMERZ Logo"
-                className="h-5"
-              />
-            </div>
+          <div className="flex flex-col gap-3 mt-4">
+            <PaymentOption label="Cash On Delivery" value="cod" selected={paymentMethod} setMethod={setPaymentMethod} icon="🚚" />
+            <PaymentOption label="Pay with Stripe" value="stripe" selected={paymentMethod} setMethod={setPaymentMethod} icon="💳" />
+            <PaymentOption label="Pay with SSLCOMMERZ" value="sslcommerz" selected={paymentMethod} setMethod={setPaymentMethod} img="https://www.sslcommerz.com/wp-content/uploads/2022/02/SSLCOMMERZ-Logo.png" />
           </div>
 
-          {/* Place Order Button */}
-          <button
-            onClick={handleOrderSubmit}
-            className="bg-black hover:bg-gray-800 text-white px-6 py-3 mt-8 rounded w-full"
-          >
-            Place Order
+          <button onClick={handleOrderSubmit} className="bg-black text-white px-10 py-3 mt-8 w-full rounded hover:bg-gray-800 transition-all duration-300">
+            PLACE ORDER
           </button>
         </div>
       </div>
     </div>
   );
 };
+
+// Payment Option Component
+const PaymentOption = ({ label, value, selected, setMethod, icon, img }) => (
+  <div onClick={() => setMethod(value)} className={`flex items-center gap-3 border p-3 rounded cursor-pointer transition ${selected === value ? 'border-black' : 'border-gray-300'}`}>
+    <div className={`w-4 h-4 border rounded-full ${selected === value ? 'bg-black' : 'bg-white'}`}></div>
+    {icon && <span>{icon}</span>}
+    {img && <img src={img} alt={label} className="h-6" />}
+    <p className="text-sm font-medium">{label}</p>
+  </div>
+);
 
 export default PlaceOrder;
