@@ -1,14 +1,60 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { auth, provider } from  '../firebase/firebase.config';
 import { signInWithPopup } from 'firebase/auth';
+import { ShopContext } from '../context/ShopContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Login = () => {
-  const [currentState, setCurrentState] = useState('Sign Up');
+  const [currentState, setCurrentState] = useState('Login');
+  const {token, setToken,navigate,backend_url} = useContext(ShopContext);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    try {
+      if(currentState === 'Sign Up'){
+        const response = await axios.post(backend_url + "/api/user/register",{name,email,password});
+        if(response.data.success){
+          setToken(response.data.token);
+          localStorage.setItem("token",response.data.token);
+          navigate("/");
+        }
+        else{
+          toast.error(response.data.message);
+        }
+
+      }
+      else{
+        const response = await axios.post(backend_url + "/api/user/login",{email,password});
+        if(response.data.success){
+          setToken(response.data.token);
+          localStorage.setItem("token",response.data.token);
+          
+        }
+        else{
+          toast.error(response.data.message);
+          
+        }
+      }
+    } catch (error) {
+      console.error("Error during authentication:", error.message);
+      toast.error("An error occurred during authentication. Please try again.");
+      
+    }
     
   };
+
+  useEffect(()=>{
+    if(token){
+      navigate("/");
+    }
+
+  },[token])
 
   const handleGoogleLogin = async () => {
     try {
@@ -29,10 +75,10 @@ const Login = () => {
 
       {/* Input Fields */}
       {currentState === 'Sign Up' && (
-        <input type="text" className='w-full px-3 py-2 border border-gray-300 rounded' placeholder='Name' required />
+        <input onChange={(e)=>setName(e.target.value)} value={name} type="text" className='w-full px-3 py-2 border border-gray-300 rounded' placeholder='Name' required />
       )}
-      <input type="email" className='w-full px-3 py-2 border border-gray-300 rounded' placeholder='Email' required />
-      <input type="password" className='w-full px-3 py-2 border border-gray-300 rounded' placeholder='Password' required />
+      <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" className='w-full px-3 py-2 border border-gray-300 rounded' placeholder='Email' required />
+      <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" className='w-full px-3 py-2 border border-gray-300 rounded' placeholder='Password' required />
 
       {/* Action Text */}
       <div className='w-full flex justify-between text-sm mt-2'>
