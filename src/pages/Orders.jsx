@@ -22,7 +22,7 @@ const Orders = () => {
                response.data.orders.map((order)=>{
                   order.items.map((item)=>{
                       item['status'] = order.status;
-                      item['payement'] = order.payment;
+                      item['payment'] = order.payment;
                       item['paymentMethod'] = order.paymentMethod;
                       item['date'] = order.date;
                       allOrdersItem.push(item);
@@ -66,6 +66,9 @@ const Orders = () => {
                 </div>
                 <p className='text-xs text-gray-500 mt-1 flex items-center gap-1'>
                   <Clock size={12} /> Date: <span className='text-gray-700 font-medium'>{new Date(item.date).toLocaleDateString()}</span>
+                </p>
+                <p className='text-xs text-gray-500 mt-1 flex items-center gap-1'>
+                   Payment: <span className='text-gray-700 font-medium'>{item.paymentMethod}</span>
                 </p>
               </div>
             </div>
