@@ -28,18 +28,6 @@ const PlaceOrder = () => {
         setFormData(data => ({ ...data, [name]: value }));
     };
 
-    
-    const initPay = (gatewayUrl) => {
-        if (window.SSLCommerzPayment) {
-          
-            const ssl = new window.SSLCommerzPayment();
-            ssl.open(gatewayUrl);
-        } else {
-            
-            window.location.replace(gatewayUrl);
-        }
-    };
-
     // 2. Order Submission Handler
     const onSubmitHandler = async (e) => {
         e.preventDefault();
@@ -87,28 +75,6 @@ const PlaceOrder = () => {
                         window.location.href = session_url;
                     } else {
                         toast.error(responseStripe.data.message);
-                    }
-                    break;
-                }
-
-                // Case: SSLCommerz Payment
-                case 'sslcommerz': {
-                    const sslOrderData = {
-                        ...orderData,
-                        name: `${formData.firstName} ${formData.lastName}`,
-                        email: formData.email,
-                        phone: formData.phone
-                    };
-
-                    const responseSSL = await axios.post(backend_url + '/api/order/ssl', sslOrderData, { headers: { token } });
-                    
-                    if (responseSSL.data.success) {
-                      
-                        window.location.replace(responseSSL.data.url);
-                        
-                     
-                    } else {
-                        toast.error(responseSSL.data.message || "SSLCommerz Session Failed");
                     }
                     break;
                 }
@@ -164,15 +130,6 @@ const PlaceOrder = () => {
                             <p className={`min-w-[14px] h-[14px] border rounded-full ${method === 'stripe' ? 'bg-green-400' : ''}`}></p>
                             <div className="flex justify-center w-full">
                                 <img className="h-5 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" />
-                            </div>
-                        </div>
-
-                        {/* SSLCommerz Option */}
-                        <div onClick={() => setMethod('sslcommerz')}
-                            className={`flex items-center gap-3 border p-2 px-4 cursor-pointer flex-1 min-w-[150px] ${method === 'sslcommerz' ? 'border-green-400 bg-green-50' : 'border-gray-300'}`}>
-                            <p className={`min-w-[14px] h-[14px] border rounded-full ${method === 'sslcommerz' ? 'bg-green-400' : ''}`}></p>
-                            <div className="flex justify-center w-full items-center gap-2">
-                                <span className="font-bold text-gray-700 text-xs sm:text-sm">SSLCommerz</span>
                             </div>
                         </div>
 
