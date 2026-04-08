@@ -1,11 +1,11 @@
-# 🛒 Modern E-Commerce Platform (MERN & Next.js)
+#  Modern E-Commerce Platform (MERN & Next.js)
 
 A fully functional, responsive, and high-performance e-commerce web application. This project features a seamless shopping experience with real-time cart synchronization between the client and a MongoDB backend.
 
-## 🚀 Live Demo
-[View Live Site](https://e-commerce-8vh8.vercel.app/)
+##  Live Demo
+[View Live Site](https://e-commerce-three-delta-37.vercel.app/)
 
-## ✨ Features
+##  Features
 - **Modern UI/UX:** Clean, professional design using Tailwind CSS.
 - **Dynamic Cart Management:** Add, update, and remove items with size-specific logic.
 - **Persistent Sessions:** User cart and authentication state saved via JWT and LocalStorage.
@@ -13,7 +13,7 @@ A fully functional, responsive, and high-performance e-commerce web application.
 - **Search & Filter:** Advanced product search and category-based filtering.
 - **Fully Responsive:** Optimized for mobile, tablet, and desktop views.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 - **Frontend:** React.js,  Tailwind CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
@@ -21,7 +21,7 @@ A fully functional, responsive, and high-performance e-commerce web application.
 - **State Management:** React Context API
 - **HTTP Client:** Axios
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 1. **Clone the repository:**
    ```bash
