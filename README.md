@@ -1,12 +1,30 @@
-# React + Vite
+# 🛒 Modern E-Commerce Platform (MERN & Next.js)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully functional, responsive, and high-performance e-commerce web application. This project features a seamless shopping experience with real-time cart synchronization between the client and a MongoDB backend.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+[View Live Site](https://e-commerce-8vh8.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
+- **Modern UI/UX:** Clean, professional design using Tailwind CSS.
+- **Dynamic Cart Management:** Add, update, and remove items with size-specific logic.
+- **Persistent Sessions:** User cart and authentication state saved via JWT and LocalStorage.
+- **Backend Integration:** Fully integrated with an Express/Node.js API and MongoDB database.
+- **Search & Filter:** Advanced product search and category-based filtering.
+- **Fully Responsive:** Optimized for mobile, tablet, and desktop views.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
+- **Frontend:** React.js,  Tailwind CSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** Firebase Auth / JWT
+- **State Management:** React Context API
+- **HTTP Client:** Axios
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Installation & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+   cd YOUR_REPO_NAME
+   
