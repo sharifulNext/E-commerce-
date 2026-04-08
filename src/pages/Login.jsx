@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { auth, provider } from  '../firebase/firebase.config';
-import { signInWithPopup } from 'firebase/auth';
 import { ShopContext } from '../context/ShopContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
