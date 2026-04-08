@@ -3,7 +3,7 @@
 A fully functional, responsive, and high-performance e-commerce web application. This project features a seamless shopping experience with real-time cart synchronization between the client and a MongoDB backend.
 
 ##  Live Demo
-[View Live Site](https://e-commerce-three-delta-37.vercel.app/)
+[View Live Site](https://e-commerce-oh13.vercel.app/)
 
 ##  Features
 - **Modern UI/UX:** Clean, professional design using Tailwind CSS.
