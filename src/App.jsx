@@ -15,6 +15,7 @@ import SearchBar from './components/SearchBar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify'
+import MyProfile from './pages/MyProfile'
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
         <Route path='/orders' element={<Orders/>} /> 
         <Route path='/verify' element={<Verify/>} />
         <Route path='/verify-ssl' element={<Verify />} />
+        <Route path='/profile' element={<MyProfile />} />
         
         
    
