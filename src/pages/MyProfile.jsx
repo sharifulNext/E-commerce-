@@ -75,7 +75,7 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* স্ট্যাটাস সেকশন */}
+    
                 <div className='grid grid-cols-3 gap-4'>
                   <div className='text-center p-4 border border-gray-100 rounded-2xl'>
                     <p className='text-xl sm:text-2xl font-bold text-gray-900'>08</p>
